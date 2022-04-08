@@ -30,7 +30,7 @@ func main() {
 	}
 	fmt.Println("kubeconfig的值: ", *kubeconfig)
 
-	operate := flag.String("operate", "create", fmt.Sprintf("operate type : %s or %s", Create, Clean))
+	operate := flag.String("operate", Clean, fmt.Sprintf("operate type : %s or %s", Create, Clean))
 	flag.Parse()
 	fmt.Printf("operation is %v\n", *operate)
 
@@ -139,7 +139,7 @@ func createDeployment(clientSet *kubernetes.Clientset) {
 								{
 									Name:          "http",
 									ContainerPort: 8080,
-									Protocol:      corev1.ProtocolSCTP,
+									Protocol:      corev1.ProtocolTCP,
 								},
 							},
 							ImagePullPolicy: corev1.PullIfNotPresent,
