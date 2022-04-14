@@ -39,15 +39,27 @@ func main() {
 	if err != nil {
 		panic(any(err.Error()))
 	}
-	namespaceClient := clientSet.CoreV1().Namespaces()
 
+	listNode(clientSet)
+
+	//namespaceClient := clientSet.CoreV1().Namespaces()
 	//createNamespace(namespaceClient)
-	updateNamespace(namespaceClient)
-
+	//updateNamespace(namespaceClient)
 	//deleteNamespace(namespaceClient)
-
 	//listNamespace(namespaceClient)
 	//getNamespace(namespaceClient)
+}
+
+func listNode(clientSet *kubernetes.Clientset) {
+	nodeClient := clientSet.CoreV1().Nodes()
+
+	list, err := nodeClient.List(metav1.ListOptions{})
+	if err != nil {
+		panic(any(err.Error()))
+	}
+	for _, item := range list.Items {
+		fmt.Println(item.Name)
+	}
 }
 
 func getNamespace(namespaceClient k8sv1.NamespaceInterface) {
