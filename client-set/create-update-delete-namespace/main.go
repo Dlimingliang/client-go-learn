@@ -59,7 +59,9 @@ func listPod(clientSet *kubernetes.Clientset) {
 		panic(any(err.Error()))
 	}
 	for _, item := range list.Items {
-		fmt.Println(item.Name)
+		for _, container := range item.Spec.Containers {
+			fmt.Println(container.Ports)
+		}
 	}
 }
 
