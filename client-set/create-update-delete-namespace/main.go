@@ -40,7 +40,8 @@ func main() {
 		panic(any(err.Error()))
 	}
 
-	listPod(clientSet)
+	listDeployment(clientSet)
+	//listPod(clientSet)
 	//listNode(clientSet)
 
 	//namespaceClient := clientSet.CoreV1().Namespaces()
@@ -49,6 +50,18 @@ func main() {
 	//deleteNamespace(namespaceClient)
 	//listNamespace(namespaceClient)
 	//getNamespace(namespaceClient)
+}
+
+func listDeployment(clientSet *kubernetes.Clientset) {
+	deploymentClient := clientSet.AppsV1().Deployments(corev1.NamespaceAll)
+
+	list, err := deploymentClient.List(metav1.ListOptions{})
+	if err != nil {
+		panic(any(err.Error()))
+	}
+	for _, item := range list.Items {
+		fmt.Println(item.Name)
+	}
 }
 
 func listPod(clientSet *kubernetes.Clientset) {
